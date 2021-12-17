@@ -43,7 +43,7 @@
                                 class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Toko</a>
+                        <a class="nav-link" href="<?=base_url('store')?>">Toko</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?=base_url('games')?>" id="navbarDropdown"

@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => $_ENV["MYSQL_HOST"],
 	'username' => 'root',
-	'password' => '',
-	'database' => 'gameina',
+	'password' => $_ENV["MYSQL_ROOT_PASSWORD"],
+	'database' => $_ENV["MYSQL_DATABASE"],
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
