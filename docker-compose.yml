@@ -1,0 +1,59 @@
+version: '3.9'
+services:
+  php-apache-env:
+    container_name: php-apache-env
+    build:
+        context: ./
+        dockerfile: Dockerfile
+    depends_on:
+        - db_mysql
+    volumes:
+        - ./apps:/var/www/html/
+    ports:
+      - 8000:80
+    networks:
+      - frontend_fe
+      - backend_be
+    environment:
+      MYSQL_HOST: ${{ MYSQL_HOST }}
+      MYSQL_USER: ${{ MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ MYSQL_PASSWORD }}
+      MYSQL_DATABASE: ${{ MYSQL_DATABASE }}
+      MYSQL_ROOT_PASSWORD: ${{ MYSQL_ROOT_PASSWORD }}
+      MYSQL_PORT: ${{ MYSQL_PORT}}
+      PMA_HOST: ${{ PMA_HOST}} 
+
+  db_mysql:
+    container_name: db_mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_HOST: ${{ MYSQL_HOST }}
+      MYSQL_USER: ${{ MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ MYSQL_PASSWORD }}
+      MYSQL_DATABASE: ${{ MYSQL_DATABASE }}
+      MYSQL_ROOT_USER: ${{ MYSQL_ROOT_USER }}
+      MYSQL_ROOT_PASSWORD: ${{ MYSQL_ROOT_PASSWORD }}
+      MYSQL_PORT: ${{ MYSQL_PORT}}
+      PMA_HOST: ${{ PMA_HOST}} 
+    ports:
+      - "3306:3306"
+    networks:
+      backend_be:
+
+  phpmyadmin:
+    container_name: pma
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    restart: always
+    environment:
+      PMA_HOST: ${{ PMA_HOST }}
+    depends_on:
+      - db_mysql
+    networks:
+      backend_be:
+
+networks:
+  frontend_fe:
+  backend_be:
